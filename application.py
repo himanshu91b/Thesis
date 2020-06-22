@@ -9,7 +9,7 @@ import tensorflow as tf
 
 from tensorflow import keras
 import numpy as np
-
+import matplotlib.pyplot as plt
 import os
 
 
@@ -19,7 +19,7 @@ import os
 import numpy as np
 import glob
 import shutil
-
+import matplotlib.pyplot as plt
 
 import tensorflow_hub as hub
 
@@ -33,22 +33,6 @@ def index():
     information = []
     return render_template('index.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/register')
-def register():
-    return render_template('register.html')
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-@app.route('/info')
-def info():
-    return render_template('info.html')
-
 @app.route('/upload', methods=['GET','POST'])
 def upload_file():
    if request.method == 'POST':
@@ -57,7 +41,6 @@ def upload_file():
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        
         result1 = predictType(file)
         flash('success')
         return render_template('results.html',result=result1)
@@ -78,7 +61,7 @@ def predictType(filename):
    image = load(filename)
 
    
-   model = '1584317473.h5'
+   model = '1583451374.h5'
 
    reloaded = tf.keras.models.load_model(model, custom_objects={'KerasLayer': hub.KerasLayer})
    
@@ -91,5 +74,5 @@ def predictType(filename):
 
 
 if __name__ == '__main__' :
-    #app.run(debug=True)
-    app.run(host='0.0.0.0',port=80)
+    app.run(debug=True)
+    #app.run(host='0.0.0.0')
